@@ -83,29 +83,29 @@ const store = {
 
 // These functions return HTML templates
 function welcomeScreen(){
-  $('body').append(
+  $('main').html(
     `<div>
-      <h2 class="ready-header">Ready to start the quiz?</hr>
+      <h2 class="ready-header">Ready to start the quiz?</h2>
       <div>
         <button class="readyButt yes-butt"><span>Yes</span></button>
       </div>
-      </div>`);
+    </div>`);
 }
 function questionScreen(){
-  $('body').append(
+  $('body').html(
     `<h2 class="question-counter">Question #1 out of #5</h2>
     <h3 class="question-spot">(question here)</h3>
   `);
 }
 function wrongOrRight(){
-  $('body').append(
+  $('body').html(
     `<h1>Wrong/Right</h1>
       <h2>Correct answer is!</h2>
       <h2>Good Job!</h2>
   `);
 }
 function answerSection(){
-  $('body').append(
+  $('body').html(
     `<form class="answers-sect">
       <label>hjeonlek</label>
       <label>ldknls</label>
