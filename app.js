@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 'use strict';
 /**
  * Example store structure
@@ -79,9 +81,47 @@ const store = {
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
-
+function welcomeScreen(){
+  // <div>
+  // <h2 class="ready-to-start   ">Ready to start the quiz?</h2>
+  // <button class="yes-butt"><span>Yes</span></button>
+  // <button class="no-butt"><span>No</span></button>
+  // </div>
+  $('body').append('<h2 class="ready-to-start>Ready to start the quiz?</hr>');
+  $('body').append('<button class="yes-butt"><span>Yes</span></button>');
+  $('body').append('<button class="no-butt"><span>No</span></button>');
+}
+function questionScreen(){
+  // <div class="counter-div">
+  //     <h2 class="question-counter">Question #1</h2>
+  // </div>
+  // <div>
+  //     <h3 class="question-spot">(question here)</h3>
+  // </div>
+  // <div>
+  //     <button><span>Submit</span></button>
+  // </div>
+}
+function wrongOrRight(){
+  // <div class="feedback-section">
+  //     <h1>wrong/right</h1>
+  //     <div>
+  //         <h2>correct answer is! || good job!</h2>
+  //     </div>
+  // </div>
+}
+function answerSection(){
+//<div>
+//   <div class="answer-spot"><span>answer here</span></div>
+//   <div class="answer-spot"><span>answer here</span></div>
+//   <div class="answer-spot"><span>answer here</span></div>
+//   <div class="answer-spot"><span>answer here</span></div>
+// </div>
+}
 /********** RENDER FUNCTION(S) **********/
-
+function renderFunc(){
+  
+}
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
 /********** EVENT HANDLER FUNCTIONS **********/
