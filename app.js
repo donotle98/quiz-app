@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable indent */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
@@ -6,6 +7,9 @@
  * Example store structure
  */
 const store = {
+  quizStarted: false,
+  questionNumber: 0,
+  score: 0,
   // 5 or more questions are required
   questions: [
     {
@@ -59,9 +63,6 @@ const store = {
       correctAnswer: 'Fulham'
     },
   ],
-  quizStarted: false,
-  questionNumber: 0,
-  score: 0
 };
 
 /**
@@ -82,43 +83,84 @@ const store = {
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
+
+
 function welcomeScreen(){
-  $('main').html(
+  const template = 
     `<div class="welcome-sect"">
       <h2 class="ready-header">Ready to start the quiz?</h2>
       <div>
         <button class="readyButt yes-butt"><span>Yes</span></button>
       </div>
-    </div>`);
+    </div>`;
+    return template;
 }
-function questionScreen(){
-  $('main').html(
-    `<h2 class="question-counter">Question #1 out of #5</h2>
-    <h3 class="question-spot">(question here)</h3>
-    <div class="whereAns">
-    </div>
-  `);
+
+function questionScreen(counter){
+  let currentQuestion = store.questions[counter].question;
+  let questionArr = store.questions.length;
+  const template = 
+    ` <h2 class="question-counter">Question #${counter + 1} out of ${questionArr}</h2>
+      <h3 class="question-spot">${currentQuestion}</h3>
+      <div class="whereAns">
+      </div>`;
+  return template;
 }
 function wrongOrRight(){
-  $('body').html(
+  const template = 
       `<h1>Wrong/Right</h1>
         <h2>Correct answer is!</h2>
         <h2>Good Job!</h2>
-  `);
+        <button class="next-question-butt"><span>Next Question</span></button>
+  `;
+  return template;
 }
-function answerSection(){
-  $('.whereAns').html(
-    `<form class="answers-sect">
-        <div class="answer"><label><input type="radio" name="radio">hjeonlek</label><br></div>
-        <div class="answer"><label><input type="radio" name="radio">ldknls</label><br></div>
-        <div class="answer"><label><input type="radio" name="radio">lkansdlnsa</label><br></div>
-        <div class="answer"><label><input type="radio" name="radio">osmdksdan</label><br></div>
-      </form>
-      <button class="submit-butt"><span>Submit</span></button>`);
+function answerSection(counter){
+  let answer1 = store.questions[counter].answers[0];
+  let answer2 = store.questions[counter].answers[1];
+  let answer3 = store.questions[counter].answers[2];
+  let answer4 = store.questions[counter].answers[3];
+  const template = `
+      <div class="answers-section">
+        <form id="answers-form">
+          <div class="answer"><label><input type="radio" name="radio" class="answer-selected">${answer1}</label></div>
+          <div class="answer"><label><input type="radio" name="radio" class="answer-selected">${answer2}</label></div>
+          <div class="answer"><label><input type="radio" name="radio" class="answer-selected">${answer3}</label></div>
+          <div class="answer"><label><input type="radio" name="radio" class="answer-selected">${answer4}</label></div>
+          <button class="submit-butt "type="submit">Submit</button>
+        </form>
+      </div>
+      `;
+    return template;
 }
+
+function readyButtonPress(){
+  $('.welcome-sect').on('click', '.readyButt', function(){
+    alert('Ready button');
+    store.quizStarted = true;
+    render();
+  });
+}
+function subButt(){
+  $('.answers-section').on('click', '.submit-butt', function(){
+    alert('Submit button');
+  });
+}
+
+
+
 /********** RENDER FUNCTION(S) **********/
-function renderFunc(){
-  
+
+function render(){
+  let page = '';
+  if(store.quizStarted === false){
+    page += welcomeScreen();
+  }
+  if(store.quizStarted === true){
+    page += questionScreen(store.questionNumber) + answerSection(store.questionNumber);
+    store.questionNumber += 1;
+  }
+  $('main').html(page);
 }
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
@@ -126,10 +168,8 @@ function renderFunc(){
 
 // These functions handle events (submit, click, etc)
 function main(){
-  welcomeScreen();
-  $('.welcome-sect').on('click', '.readyButt', function(){
-    questionScreen();
-    answerSection();
-  });
+  render();
+  readyButtonPress();
+  subButt();
 }
 $(main);

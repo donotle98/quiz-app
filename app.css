@@ -50,7 +50,7 @@ h2.question-counter{
 .whereAns{
   text-align: center;
 }
-.answers-sect{
+#answers-sect{
   margin: auto;
   width: 100px;
   box-sizing: border-box;
