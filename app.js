@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 'use strict';
@@ -82,48 +83,50 @@ const store = {
 
 // These functions return HTML templates
 function welcomeScreen(){
-  // <div>
-  // <h2 class="ready-to-start   ">Ready to start the quiz?</h2>
-  // <button class="yes-butt"><span>Yes</span></button>
-  // <button class="no-butt"><span>No</span></button>
-  // </div>
-  $('body').append('<h2 class="ready-to-start>Ready to start the quiz?</hr>');
-  $('body').append('<button class="yes-butt"><span>Yes</span></button>');
-  $('body').append('<button class="no-butt"><span>No</span></button>');
+  $('body').append(
+    `<div>
+      <h2 class="ready-header">Ready to start the quiz?</hr>
+      <div>
+        <button class="readyButt yes-butt"><span>Yes</span></button>
+      </div>
+      </div>`);
 }
 function questionScreen(){
-  // <div class="counter-div">
-  //     <h2 class="question-counter">Question #1</h2>
-  // </div>
-  // <div>
-  //     <h3 class="question-spot">(question here)</h3>
-  // </div>
-  // <div>
-  //     <button><span>Submit</span></button>
-  // </div>
+  $('body').append(
+    `<h2 class="question-counter">Question #1 out of #5</h2>
+    <h3 class="question-spot">(question here)</h3>
+  `);
 }
 function wrongOrRight(){
-  // <div class="feedback-section">
-  //     <h1>wrong/right</h1>
-  //     <div>
-  //         <h2>correct answer is! || good job!</h2>
-  //     </div>
-  // </div>
+  $('body').append(
+    `<h1>Wrong/Right</h1>
+      <h2>Correct answer is!</h2>
+      <h2>Good Job!</h2>
+  `);
 }
 function answerSection(){
-//<div>
-//   <div class="answer-spot"><span>answer here</span></div>
-//   <div class="answer-spot"><span>answer here</span></div>
-//   <div class="answer-spot"><span>answer here</span></div>
-//   <div class="answer-spot"><span>answer here</span></div>
-// </div>
+  $('body').append(
+    `<form class="answers-sect">
+      <label>hjeonlek</label>
+      <label>ldknls</label>
+      <label>lkansdlnsa</label>
+      <label>osmdksdan</label>
+      </form>
+      <button class="submit-butt"><span>Submit</span></button>
+    `);
 }
 /********** RENDER FUNCTION(S) **********/
 function renderFunc(){
-  
+  welcomeScreen();
 }
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
+
+
+
+
+
+$(renderFunc);
