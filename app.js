@@ -84,7 +84,7 @@ const store = {
 // These functions return HTML templates
 function welcomeScreen(){
   $('main').html(
-    `<div>
+    `<div class="welcome-sect"">
       <h2 class="ready-header">Ready to start the quiz?</h2>
       <div>
         <button class="readyButt yes-butt"><span>Yes</span></button>
@@ -92,41 +92,44 @@ function welcomeScreen(){
     </div>`);
 }
 function questionScreen(){
-  $('body').html(
+  $('main').html(
     `<h2 class="question-counter">Question #1 out of #5</h2>
     <h3 class="question-spot">(question here)</h3>
+    <div class="whereAns">
+    </div>
   `);
 }
 function wrongOrRight(){
   $('body').html(
-    `<h1>Wrong/Right</h1>
-      <h2>Correct answer is!</h2>
-      <h2>Good Job!</h2>
+      `<h1>Wrong/Right</h1>
+        <h2>Correct answer is!</h2>
+        <h2>Good Job!</h2>
   `);
 }
 function answerSection(){
-  $('body').html(
+  $('.whereAns').html(
     `<form class="answers-sect">
-      <label>hjeonlek</label>
-      <label>ldknls</label>
-      <label>lkansdlnsa</label>
-      <label>osmdksdan</label>
+        <div class="answer"><label><input type="radio" name="radio">hjeonlek</label><br></div>
+        <div class="answer"><label><input type="radio" name="radio">ldknls</label><br></div>
+        <div class="answer"><label><input type="radio" name="radio">lkansdlnsa</label><br></div>
+        <div class="answer"><label><input type="radio" name="radio">osmdksdan</label><br></div>
       </form>
-      <button class="submit-butt"><span>Submit</span></button>
-    `);
+      <button class="submit-butt"><span>Submit</span></button>`);
 }
 /********** RENDER FUNCTION(S) **********/
 function renderFunc(){
-  welcomeScreen();
+  
 }
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
-
-
-
-
-
-$(renderFunc);
+function main(){
+  welcomeScreen();
+  $('.welcome-sect').on('click', '.readyButt', function(){
+    questionScreen();
+    answerSection();
+  });
+}
+$(main);

@@ -15,7 +15,7 @@ body{
   justify-content: center;
 }
 header{
-  margin-bottom: 40%;
+  margin-bottom: 20%;
 }
 h2.question-counter{
   padding: 20px;
@@ -24,7 +24,7 @@ h2.question-counter{
   padding: 20px;
 }
 .readyButt{
-  margin-top: 40%;
+  margin-top: 20%;
 }
 .counter-div{
   padding: 10%;
@@ -47,10 +47,16 @@ h2.question-counter{
 .submit-butt{
   margin-top: 5%;
 }
-.answers-sect{
-  display: flex;
-  flex-direction: column;
+.whereAns{
+  text-align: center;
 }
-label{
-  padding-bottom: 15px;
+.answers-sect{
+  margin: auto;
+  width: 100px;
+  box-sizing: border-box;
+  position: relative;
+  text-align: left;
+}
+.answer{
+  margin-bottom: 14px;
 }
