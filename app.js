@@ -146,6 +146,7 @@ function wrongAnswer(){
     <button class="next-question-butt"><span>Next Question</span></button>
   </div>
   `;
+  
   store.questionNumber += 1;
   return wrongAnswer;
 }
@@ -156,27 +157,6 @@ function nextQuestionButton(){
     render();
   });
 }
-// function wrongOrRight(counter, value){
-//   const correctAnswer = 
-//   `<div class="result-section">
-//     <h1>Right!</h1>
-//     <h2>Good Job!</h2>
-//     <button class="next-question-butt"><span>Next Question</span></button>
-//   </div>
-// `;
-//   const wrongAnswer = 
-//   `<div class="result-section">
-//     <h1>Sorry, but that is wrong!</h1>
-//     <h2>Correct answer is: ${store.questions[counter].correctAnswer}</h2>
-//     <button class="next-question-butt"><span>Next Question</span></button>
-//   </div>
-//   `;
-//   if(value === 1){
-//     return correctAnswer;
-//   } else{
-//     return wrongAnswer;
-//   }
-// }
 function readyButtonPress(){
   $('.welcome-sect').on('click', '.readyButt', function(){
     console.log('Ready button');
@@ -198,6 +178,8 @@ function checkAnswer(correctinput){
 function subButt(){
   $('body').submit('#answers-form', function(event){
     event.preventDefault();
+    let correctans = store.questions[store.questionNumber].correctAnswer;
+    console.log('Correct answer: ' + `${correctans}`)
     console.log('Submit button press');
     renderResults();
   });
@@ -205,7 +187,7 @@ function subButt(){
 
 /********** RENDER FUNCTION(S) **********/
 
-function render(state){
+function render(){
   let page = '';
   if(store.quizStarted === false){
     page += welcomeScreen();
@@ -220,8 +202,9 @@ function renderResults(){
   let page = '';
   let correctans = store.questions[store.questionNumber].correctAnswer;
   page += checkAnswer(correctans);
+
   $('main').html(page);
-  render();
+  nextQuestionButton();
 }
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
@@ -232,6 +215,6 @@ function main(){
   render();
   readyButtonPress();
   subButt();
-  nextQuestionButton()
+  nextQuestionButton();
 }
 $(main);
