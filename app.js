@@ -17,7 +17,7 @@ const store = {
     {
       question: 'Oranges and Lemons say the bells of St Clements. What does the great bell of Bow say?',
       answers: [
-        'All hail america!',
+        'Vegemite is alright',
         'lets go drink some tea',
         'boats are nice, yachts are nicer',
         'i do not know'
@@ -102,69 +102,74 @@ function questionScreen(counter){
   let currentQuestion = store.questions[counter].question;
   let questionArr = store.questions.length;
   const template = 
-    ` <h2 class="question-counter">Question #${counter + 1} out of ${questionArr}</h2>
-      <h3 class="question-spot">${currentQuestion}</h3>
+    ` <div class="question-div">
+        <h2 class="question-counter">Question #${counter + 1} out of ${questionArr}</h2>
+        <h3 class="question-spot">${currentQuestion}</h3>
+      </div>
+      
       <div class="whereAns">
       </div>`;
   return template;
 }
 function answerSection(counter){
-  let answer1 = store.questions[counter].answers[0];
-  let answer2 = store.questions[counter].answers[1];
-  let answer3 = store.questions[counter].answers[2];
-  let answer4 = store.questions[counter].answers[3];
   const template = `
       <div class="answers-section">
         <form id="answers-form">
-          <div class="answer"><label class="answer-selected"><input type="radio" class="answer-input" name="radio" value="${answer1}">${answer1}</label></div>
-          <div class="answer"><label class="answer-selected"><input type="radio" class="answer-input" name="radio" value="${answer2}">${answer2}</label></div>
-          <div class="answer"><label class="answer-selected"><input type="radio" class="answer-input" name="radio" value="${answer3}">${answer3}</label></div>
-          <div class="answer"><label class="answer-selected"><input type="radio" class="answer-input" name="radio" value="${answer4}">${answer4}</label></div>
-          <input type="submit" value="Submit">
+          ${store.questions[counter].answers
+            .map(
+              (answer) =>
+                `<div class="answer"><label class="answer-selected strikethrough"><input type="radio" class="answer-input" name="radio" value="${answer}" aria-pressed="false">${answer}</label></div><div class="check"><div class="inside"></div></div>`
+            )
+            .join('')}
+          <input type="submit" value="Submit" class="submit-button hvr-buzz">
         </form>
       </div>
       `;
-    return template;
+      const pressedBool = $('.answer-selected').attr('aria-pressed') === true;
+  return template;
 }
 
 function rightAnswer(){
   const correctAnswer = 
-  `<div class="result-section">
-    <h1>Right!</h1>
-    <h2>Good Job!</h2>
-    <button class="next-question-butt"><span>Next Question</span></button>
+  `
+  <div class="result-section">
+    <div class="container">
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    </div>
+    <div class="confetti"></div>
+    <h1 class="wrong-right" style="color:green" st>Right!</h1>
+    <h2 class="correct-ans">Good Job!</h2>
+    <button class="next-question-butt">Next Question</button>
   </div>
 `;
+store.score += 1;
 store.questionNumber += 1;
 return correctAnswer;
 }
 function wrongAnswer(){
   const wrongAnswer = 
   `<div class="result-section">
-    <h1>Sorry, but that is wrong!</h1>
-    <h2>Correct answer is: ${store.questions[store.questionNumber].correctAnswer}</h2>
+    <h1 class="wrong-right" style="color:red">Sorry, but that is wrong!</h1>
+    <h2 class="correct-ans">Correct answer is: ${store.questions[store.questionNumber].correctAnswer}</h2>
     <button class="next-question-butt"><span>Next Question</span></button>
   </div>
   `;
-  
   store.questionNumber += 1;
   return wrongAnswer;
 }
-function nextQuestionButton(){
-  $('.result-section').on('click', '.next-question-butt', function(){
-    console.log('Next question button');
-    store.quizStarted = true;
-    render();
-  });
-}
-function readyButtonPress(){
-  $('.welcome-sect').on('click', '.readyButt', function(){
-    console.log('Ready button');
-    store.quizStarted = true;
-    render();
-  });
-}
-
 function checkAnswer(correctinput){
   let userAnswer = $('input[name="radio"]:checked').val();
   console.log('User Answer: ' + userAnswer);
@@ -174,17 +179,73 @@ function checkAnswer(correctinput){
     return wrongAnswer();
   }
 }
+function endPage(){
+  let userAnswer = $('input[name="radio"]:checked').val();
+  let correctans = store.questions[store.questionNumber].correctAnswer;
+  const endPageRightAnswer = 
+  `
+  <h2>Correct!</h2>
+  `;
+  const endPageWrongAnswer = 
+  `
+  <h2>Wrong!</h2>
+  <h3>Correct answer is: ${store.questions[store.questionNumber].correctAnswer} </h3>
+  `;
+  const endpage = `
+  <h2>End of quiz!!</h2>
+  <h2>Your score is: ${store.score} out of ${store.questions.length}</h2>
+  <div class="end-page-button"><button class="restart-button">Restart?</button></div>
 
+  `;
+  if(userAnswer === correctans){
+    store.quizStarted = false;
+    return endPageRightAnswer + endpage;
+  } else{
+    store.quizStarted = false;
+    return endPageWrongAnswer + endpage;
+  }
+}
+function restartButton(){
+  $('.end-page-button').on('click', '.restart-button', function(){
+    console.log('Restart Button Pressed!');
+    store.quizStarted = true;
+    store.questionNumber = 0;
+    render();
+  });
+}
+function readyButtonPress(){
+  $('.welcome-sect').on('click', '.readyButt', function(){
+    console.log('Ready button');
+    store.quizStarted = true;
+    render();
+  });
+  $('.welcome-sect')
+}
 function subButt(){
   $('body').submit('#answers-form', function(event){
     event.preventDefault();
     let correctans = store.questions[store.questionNumber].correctAnswer;
+    let userAnswer = $('input[name="radio"]:checked').val();
     console.log('Correct answer: ' + `${correctans}`)
     console.log('Submit button press');
-    renderResults();
+    if(!userAnswer){
+      alert('Please select an answer');
+    } else{
+      if(store.questionNumber + 1 === store.questions.length){
+        renderEndPage();
+      } else{
+        renderResults();
+      }
+    }
   });
 }
-
+function nextQuestionButton(){
+  $('.result-section').on('click', '.next-question-butt', function(){
+    console.log('Next question button');
+    store.quizStarted = true;
+    render();
+  });
+}
 /********** RENDER FUNCTION(S) **********/
 
 function render(){
@@ -192,19 +253,24 @@ function render(){
   if(store.quizStarted === false){
     page += welcomeScreen();
   }
-
   if(store.quizStarted === true){
     page += questionScreen(store.questionNumber) + answerSection(store.questionNumber);
   }
   $('main').html(page);
+
 }
 function renderResults(){
   let page = '';
   let correctans = store.questions[store.questionNumber].correctAnswer;
   page += checkAnswer(correctans);
-
   $('main').html(page);
   nextQuestionButton();
+}
+function renderEndPage(){
+  let page = '';
+  page += endPage();
+  $('main').html(page);
+  restartButton();
 }
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
