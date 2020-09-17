@@ -1,3 +1,5 @@
+/* eslint-disable no-cond-assign */
+/* eslint-disable eqeqeq */
 /* eslint-disable no-console */
 /* eslint-disable indent */
 /* eslint-disable no-undef */
@@ -87,7 +89,7 @@ const store = {
 
 function welcomeScreen(){
   const template = 
-    `<div class="welcome-sect"">
+    `<div class="welcome-sect">
       <h2 class="ready-header">Ready to start the quiz?</h2>
       <div>
         <button class="readyButt yes-butt"><span>Yes</span></button>
@@ -106,15 +108,6 @@ function questionScreen(counter){
       </div>`;
   return template;
 }
-function wrongOrRight(){
-  const template = 
-      `<h1>Wrong/Right</h1>
-        <h2>Correct answer is!</h2>
-        <h2>Good Job!</h2>
-        <button class="next-question-butt"><span>Next Question</span></button>
-  `;
-  return template;
-}
 function answerSection(counter){
   let answer1 = store.questions[counter].answers[0];
   let answer2 = store.questions[counter].answers[1];
@@ -123,31 +116,93 @@ function answerSection(counter){
   const template = `
       <div class="answers-section">
         <form id="answers-form">
-          <div class="answer"><label><input type="radio" name="radio" class="answer-selected">${answer1}</label></div>
-          <div class="answer"><label><input type="radio" name="radio" class="answer-selected">${answer2}</label></div>
-          <div class="answer"><label><input type="radio" name="radio" class="answer-selected">${answer3}</label></div>
-          <div class="answer"><label><input type="radio" name="radio" class="answer-selected">${answer4}</label></div>
-          <button class="submit-butt "type="submit">Submit</button>
+          <div class="answer"><label class="answer-selected"><input type="radio" class="answer-input" name="radio" value="${answer1}">${answer1}</label></div>
+          <div class="answer"><label class="answer-selected"><input type="radio" class="answer-input" name="radio" value="${answer2}">${answer2}</label></div>
+          <div class="answer"><label class="answer-selected"><input type="radio" class="answer-input" name="radio" value="${answer3}">${answer3}</label></div>
+          <div class="answer"><label class="answer-selected"><input type="radio" class="answer-input" name="radio" value="${answer4}">${answer4}</label></div>
+          <input type="submit" value="Submit">
         </form>
       </div>
       `;
     return template;
 }
 
-function readyButtonPress(){
-  $('.welcome-sect').on('click', '.readyButt', function(){
-    alert('Ready button');
+function rightAnswer(){
+  const correctAnswer = 
+  `<div class="result-section">
+    <h1>Right!</h1>
+    <h2>Good Job!</h2>
+    <button class="next-question-butt"><span>Next Question</span></button>
+  </div>
+`;
+$('body').html(correctAnswer);
+}
+function wrongAnswer(){
+  const wrongAnswer = 
+  `<div class="result-section">
+    <h1>Sorry, but that is wrong!</h1>
+    <h2>Correct answer is: ${store.questions[store.questionNumber].correctAnswer}</h2>
+    <button class="next-question-butt"><span>Next Question</span></button>
+  </div>
+  `;
+  $('body').html(wrongAnswer);
+}
+function nextQuestionButton(){
+  $('.result-section').on('click', '.next-question-butt', function(){
+    console.log('Next question button');
     store.quizStarted = true;
     render();
   });
 }
-function subButt(){
-  $('.answers-section').on('click', '.submit-butt', function(){
-    alert('Submit button');
+// function wrongOrRight(counter, value){
+//   const correctAnswer = 
+//   `<div class="result-section">
+//     <h1>Right!</h1>
+//     <h2>Good Job!</h2>
+//     <button class="next-question-butt"><span>Next Question</span></button>
+//   </div>
+// `;
+//   const wrongAnswer = 
+//   `<div class="result-section">
+//     <h1>Sorry, but that is wrong!</h1>
+//     <h2>Correct answer is: ${store.questions[counter].correctAnswer}</h2>
+//     <button class="next-question-butt"><span>Next Question</span></button>
+//   </div>
+//   `;
+//   if(value === 1){
+//     return correctAnswer;
+//   } else{
+//     return wrongAnswer;
+//   }
+// }
+function readyButtonPress(){
+  $('.welcome-sect').on('click', '.readyButt', function(){
+    console.log('Ready button');
+    store.quizStarted = true;
+    render();
   });
 }
 
+function checkAnswer(correctinput){
+  let userAnswer = $('input[name="radio"]:checked').val();
+  console.log('User Answer ' + userAnswer);
+  if(userAnswer == correctinput){
+    return rightAnswer();
+  } else{
+    return wrongAnswer();
+  }
+}
 
+function subButt(){
+  $('body').submit('#answers-form', function(event){
+    event.preventDefault();
+    let correctans = store.questions[store.questionNumber].correctAnswer;
+    console.log('Correct Answer ' + correctans);
+    checkAnswer(correctans);
+    store.questionNumber += 1;
+    render();
+  });
+}
 
 /********** RENDER FUNCTION(S) **********/
 
@@ -158,7 +213,6 @@ function render(){
   }
   if(store.quizStarted === true){
     page += questionScreen(store.questionNumber) + answerSection(store.questionNumber);
-    store.questionNumber += 1;
   }
   $('main').html(page);
 }
