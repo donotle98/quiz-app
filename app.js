@@ -135,7 +135,8 @@ function rightAnswer(){
     <button class="next-question-butt"><span>Next Question</span></button>
   </div>
 `;
-$('body').html(correctAnswer);
+store.questionNumber += 1;
+return correctAnswer;
 }
 function wrongAnswer(){
   const wrongAnswer = 
@@ -145,7 +146,8 @@ function wrongAnswer(){
     <button class="next-question-butt"><span>Next Question</span></button>
   </div>
   `;
-  $('body').html(wrongAnswer);
+  store.questionNumber += 1;
+  return wrongAnswer;
 }
 function nextQuestionButton(){
   $('.result-section').on('click', '.next-question-butt', function(){
@@ -185,7 +187,7 @@ function readyButtonPress(){
 
 function checkAnswer(correctinput){
   let userAnswer = $('input[name="radio"]:checked').val();
-  console.log('User Answer ' + userAnswer);
+  console.log('User Answer: ' + userAnswer);
   if(userAnswer == correctinput){
     return rightAnswer();
   } else{
@@ -196,25 +198,30 @@ function checkAnswer(correctinput){
 function subButt(){
   $('body').submit('#answers-form', function(event){
     event.preventDefault();
-    let correctans = store.questions[store.questionNumber].correctAnswer;
-    console.log('Correct Answer ' + correctans);
-    checkAnswer(correctans);
-    store.questionNumber += 1;
-    render();
+    console.log('Submit button press');
+    renderResults();
   });
 }
 
 /********** RENDER FUNCTION(S) **********/
 
-function render(){
+function render(state){
   let page = '';
   if(store.quizStarted === false){
     page += welcomeScreen();
   }
+
   if(store.quizStarted === true){
     page += questionScreen(store.questionNumber) + answerSection(store.questionNumber);
   }
   $('main').html(page);
+}
+function renderResults(){
+  let page = '';
+  let correctans = store.questions[store.questionNumber].correctAnswer;
+  page += checkAnswer(correctans);
+  $('main').html(page);
+  render();
 }
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
@@ -225,5 +232,6 @@ function main(){
   render();
   readyButtonPress();
   subButt();
+  nextQuestionButton()
 }
 $(main);
