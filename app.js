@@ -153,7 +153,9 @@ function rightAnswer(){
     <div class="confetti"></div>
     </div>
     <div class="confetti"></div>
-    <h1 class="wrong-right" style="color:green" st>Right!</h1>
+
+
+    <h1 class="wrong-right" style="color:green">Right!</h1>
     <h2 class="correct-ans">Good Job!</h2>
     <button class="next-question-butt">Next Question</button>
   </div>
