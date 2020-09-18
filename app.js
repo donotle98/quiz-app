@@ -97,7 +97,6 @@ function welcomeScreen(){
     </div>`;
     return template;
 }
-
 function questionScreen(counter){
   let currentQuestion = store.questions[counter].question;
   let questionArr = store.questions.length;
@@ -118,7 +117,11 @@ function answerSection(counter){
           ${store.questions[counter].answers
             .map(
               (answer) =>
-                `<div class="answer"><label class="answer-selected strikethrough"><input type="radio" class="answer-input" name="radio" value="${answer}" aria-pressed="false">${answer}</label></div><div class="check"><div class="inside"></div></div>`
+                `<div class="answer">
+                <label class="answer-selected strikethrough">
+                <input type="radio" class="answer-input" name="radio" value="${answer}" aria-pressed="false" required>${answer}
+                </label>
+                </div>`
             )
             .join('')}
           <input type="submit" value="Submit" class="submit-button hvr-buzz">
@@ -163,7 +166,7 @@ function wrongAnswer(){
   const wrongAnswer = 
   `<div class="result-section">
     <h1 class="wrong-right" style="color:red">Sorry, but that is wrong!</h1>
-    <h2 class="correct-ans">Correct answer is: ${store.questions[store.questionNumber].correctAnswer}</h2>
+    <h2 class="correct-ans">Correct answer is: "${store.questions[store.questionNumber].correctAnswer}"</h2>
     <button class="next-question-butt"><span>Next Question</span></button>
   </div>
   `;
@@ -184,18 +187,17 @@ function endPage(){
   let correctans = store.questions[store.questionNumber].correctAnswer;
   const endPageRightAnswer = 
   `
-  <h2>Correct!</h2>
+  <h2 class="endPageResult">Correct!</h2>
   `;
   const endPageWrongAnswer = 
   `
-  <h2>Wrong!</h2>
-  <h3>Correct answer is: ${store.questions[store.questionNumber].correctAnswer} </h3>
+  <h2 class="endPageResult endPageWrong">Wrong! You're an idiot lol</h2>
+  <h3 class="endPageWrongResult">Correct answer is: ${store.questions[store.questionNumber].correctAnswer} </h3>
   `;
   const endpage = `
-  <h2>End of quiz!!</h2>
-  <h2>Your score is: ${store.score} out of ${store.questions.length}</h2>
-  <div class="end-page-button"><button class="restart-button">Restart?</button></div>
-
+  <h2 class="endQuizState">End of quiz!!</h2>
+  <h2 class="endScore">Your score is: ${store.score + 1} out of ${store.questions.length}</h2>
+  <div class="end-page-button"><button class="restart-button end-page-restart">Restart?</button></div>
   `;
   if(userAnswer === correctans){
     store.quizStarted = false;
@@ -210,6 +212,7 @@ function restartButton(){
     console.log('Restart Button Pressed!');
     store.quizStarted = true;
     store.questionNumber = 0;
+    store.score = 0;
     render();
   });
 }
@@ -219,7 +222,6 @@ function readyButtonPress(){
     store.quizStarted = true;
     render();
   });
-  $('.welcome-sect')
 }
 function subButt(){
   $('body').submit('#answers-form', function(event){
@@ -246,7 +248,8 @@ function nextQuestionButton(){
     render();
   });
 }
-/********** RENDER FUNCTION(S) **********/
+
+/**********RENDER FUNCTION(S)**********/
 
 function render(){
   let page = '';
@@ -257,8 +260,8 @@ function render(){
     page += questionScreen(store.questionNumber) + answerSection(store.questionNumber);
   }
   $('main').html(page);
-
 }
+
 function renderResults(){
   let page = '';
   let correctans = store.questions[store.questionNumber].correctAnswer;
@@ -283,4 +286,5 @@ function main(){
   subButt();
   nextQuestionButton();
 }
+
 $(main);

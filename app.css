@@ -16,11 +16,14 @@ body{
   background-color: #2c2c2c;
   color: white;
 }
+main{
+  font-family: 'Indie Flower', cursive;
+}
 header{
   margin-top: 3%;
   font-size: 3vh;
   font-family: 'Lobster';
-  color: #BCB382
+  color: #F6C28B;
 }
 h2.question-counter{
   padding: 20px;
@@ -47,7 +50,7 @@ h2.question-counter{
   -moz-border-radius: 100px;
   border-radius: 100px;
   color: #FFFFFF;
-  font-family: Open Sans;
+  font-family: 'Bebas Neue', cursive;
   font-size: 5vh;
   font-weight: 300;
   padding: 15px;
@@ -82,15 +85,18 @@ h2.question-counter{
   border: solid;
   border-color: white;
   width: 48vh;
-  background-color: #e5c687;
+  background-color: #A57548;
 }
 .question-counter{
   width: 90%;
   margin: auto;
   text-decoration: underline;
 }
+.question-spot{
+  padding-bottom: 15px;
+}
 .answers-section{
-  width: 40vh;
+  width: 45vh;
   margin: auto;
   text-align: center;
 }
@@ -107,7 +113,7 @@ h2.question-counter{
 }
 .answer{
   text-align: left;
-  font-size: 3vh;
+  font-size: 4vh;
   padding-left: 5px;
 }
 .answer-spot{
@@ -144,11 +150,11 @@ h2.question-counter{
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
-  border-radius: 100px;
+  border-radius: 70px;
   color: #FFFFFF;
-  font-family: monospace;
-  font-size: 25px;
-  font-weight: 300;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 3vh;
+  font-weight: 500;
   padding: 13px;
   margin-bottom: 5%;
   background-color: #9B9B9B;
@@ -163,6 +169,8 @@ h2.question-counter{
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
   border: solid lightgreen 1px;
+  text-shadow: 2px 2px 3px black;
+  box-shadow: 3px 3px 8px black;
 }
 .whereAns{
   text-align: center;
@@ -177,8 +185,14 @@ h2.question-counter{
 .answer{
   margin-bottom: 14px;
 }
+input[type=radio] {
+  background-color: lightpink;
+}
+.result-section{
+  font-family: 'Indie Flower', cursive;
+}
 .wrong-right{
-  margin-top: 20%;
+  margin-top: 10%;
 }
 .correct-ans{
   margin-top: 10%;
@@ -236,6 +250,80 @@ background-color: #f2d74e; left: 100%; animation-delay: -2.5s;
 100% { transform: rotateZ(15deg) rotateY(1440deg) translate(10vw,110vh); }
 }
 .next-question-butt{
-  color:black;
-  background-color: yellow;
+	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	background-color:#768d87;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+  font-family: 'Bebas Neue', cursive;
+	font-size:15px;
+	font-weight:bold;
+	padding:11px 23px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;
+}
+.next-question-butt:hover{
+  background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	background-color:#6c7c7c;
+}
+.next-question-butt:active{
+  position:relative;
+	top:1px;
+}
+.endPageResult{
+  margin-bottom: 10%;
+  color: green;
+  font-size: 8vh;
+}
+.endPageWrong{
+  color: red;
+}
+.endPageWrongResult{
+  margin-bottom: 8%;
+  font-size: 5vh;
+}
+.endQuizState{
+  margin-bottom: 5%;
+  font-size: 10vh;
+  animation: color-change 2s infinite;
+}
+@keyframes color-change {
+  5% { color: red; }
+  14% { color: orange; }
+  28% { color: yellow; }
+  42% {color: green}
+  56% {color: teal}
+  70% {color:blue}
+  84% {color: indigo}
+  100% {color: violet}
+}
+.endScore{
+  font-size: 5vh;
+  margin-bottom: 5%;
+}
+.end-page-button{
+	box-shadow: 3px 4px 0px 0px #8a2a21;
+	background:linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
+	background-color:#c62d1f;
+	border-radius:18px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05; 
+}
+.end-page-button:hover{
+  background:linear-gradient(to bottom, #f24437 5%, #c62d1f 100%);
+	background-color:#f24437;
+}
+.end-page-button:active{
+  position:relative;
+	top:1px;
 }
