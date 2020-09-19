@@ -12,6 +12,7 @@ const store = {
   quizStarted: false,
   questionNumber: 0,
   score: 0,
+  incorrectCounter: 0,
   // 5 or more questions are required
   questions: [
     {
@@ -104,6 +105,8 @@ function questionScreen(counter){
     ` <div class="question-div">
         <h2 class="question-counter">Question #${counter + 1} out of ${questionArr}</h2>
         <h3 class="question-spot">${currentQuestion}</h3>
+
+        <h4><span style="color:green">Correct:</span> ${store.score} || <span style="color:red">Incorrect:</span> ${store.incorrectCounter}</h4>
       </div>
       
       <div class="whereAns">
@@ -128,7 +131,6 @@ function answerSection(counter){
         </form>
       </div>
       `;
-      const pressedBool = $('.answer-selected').attr('aria-pressed') === true;
   return template;
 }
 
@@ -168,11 +170,12 @@ function wrongAnswer(){
   const wrongAnswer = 
   `<div class="result-section">
     <h1 class="wrong-right" style="color:red">Sorry, but that is wrong!</h1>
-    <h2 class="correct-ans">Correct answer is: "${store.questions[store.questionNumber].correctAnswer}"</h2>
+    <h2 class="correct-ans">Correct answer is: <span style="border:solid; border-color:white; padding:5px;">${store.questions[store.questionNumber].correctAnswer}</span></h2>
     <button class="next-question-butt"><span>Next Question</span></button>
   </div>
   `;
   store.questionNumber += 1;
+  store.incorrectCounter += 1;
   return wrongAnswer;
 }
 function checkAnswer(correctinput){
@@ -193,8 +196,8 @@ function endPage(){
   `;
   const endPageWrongAnswer = 
   `
-  <h2 class="endPageResult endPageWrong">Wrong! You're an idiot lol</h2>
-  <h3 class="endPageWrongResult">Correct answer is: ${store.questions[store.questionNumber].correctAnswer} </h3>
+  <h2 class="endPageResult endPageWrong">Wrong!</h2>
+  <h3 class="endPageWrongResult">Correct answer is: <span style="border:solid; border-color:white; padding:5px;">${store.questions[store.questionNumber].correctAnswer}</span> </h3>
   `;
   const endpage = `
   <h2 class="endQuizState">End of quiz!!</h2>
@@ -215,6 +218,7 @@ function restartButton(){
     store.quizStarted = true;
     store.questionNumber = 0;
     store.score = 0;
+    store.incorrectCounter = 0;
     render();
   });
 }
